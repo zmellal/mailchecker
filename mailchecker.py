@@ -4,7 +4,6 @@ import re
 import os
 import socket
 
-
 class MailChecker(object):
 
 
@@ -73,9 +72,9 @@ class MailChecker(object):
 		print("MX Server check OK")
 		print("Connecting to {}..".format(mx_servers[0]))
 		if self._smtp_checker(mx_servers[0],mail_adr) == False:
-			print("Mail server rejected the address : ")
+			print("Mail server rejected the address : email address is not valid")
 			return 
-		print("Mail server did not reject the address : address may be valid")
+		print("Mail server did not reject the address : email address may be valid")
 		
 def main():
 	if len(sys.argv)<2:
