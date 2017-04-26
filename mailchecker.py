@@ -6,7 +6,6 @@ import socket
 
 class MailChecker(object):
 
-
 	def _syntaxe_checker(self,mail_adr):
 		pattern = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])\""
 		pattern2 = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
@@ -33,32 +32,31 @@ class MailChecker(object):
 			data = s.recv(4096)
 			print(repr(data))
 			print("EHLO localhost")
-			s.send("EHLO mx1.validemail.com\r\n")
+			s.send("EHLO localhost\r\n")
 			data = s.recv(4096)
-			print(repr(data))
+			print(data)
 			print("MAIL FROM:<>")
 			s.send("MAIL FROM:<>\r\n")
 			data = s.recv(4096)
-			print(repr(data))
+			print(data)
 			print("RCPT TO:<{}>".format(mail_adr))
 			s.send("RCPT TO:<{}>\r\n".format(mail_adr))
 			data = s.recv(4096)
-			print(repr(data))
+			print(data)
 			if(int(data[:3])==250): is_valid =  True
 			else: is_valid = False
 			print("RSET")
 			s.send("RSET\r\n")
 			data = s.recv(4096)
-			print(repr(data))
+			print(data)
 			print("QUIT")
 			s.send("QUIT\r\n")
 			data = s.recv(4096)
-			print(repr(data))
+			print(data)
 			s.close()
 			return is_valid
 		except socket.error,msg:
 			print("Exception {}".format(msg))
-
 
 	def check_mail(self,mail_adr,dns_server="8.8.8.8"):
 		if not self._syntaxe_checker(mail_adr):

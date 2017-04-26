@@ -1,3 +1,4 @@
 # mailchecker
 
-Usage : python mailcheker.py mail_address
+Usage : python mailcheker.py email_address
+
